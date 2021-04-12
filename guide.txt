@@ -1,0 +1,48 @@
+libs:
+npm install --save-dev electron-builder
+npm install --save electron-updater
+
+no main.js:
+
+const { autoUpdater } = require('electron-updater');
+
+no final da função "createWindow":
+
+mainWindow.once('ready-to-show', () => {
+  autoUpdater.checkForUpdatesAndNotify();
+});
+
+no final do main.js:
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+
+criar um arquivo “electron-builder.yml” e add ao .gitignore:
+
+appId: com.example.ElectronAutoUpdate
+publish:
+  provider: github
+  token: [YOUR GITHUB ACCESS TOKEN]
+
+no package.json:
+
+"repository": {
+  "type" : "git",
+  "url" : "https://github.com/[YOUR USERNAME]/[YOUR REPO NAME].git"
+},
+
+Adicionar aos scripts do package.json:
+
+"build": "electron-builder build --mac --win --publish never",
+"deploy": "electron-builder build --mac --win --publish always"
+
+rodar:
+
+npm run deploy
+
+No github, editar e publicar a release
+
