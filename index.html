@@ -56,6 +56,17 @@
       notification.classList.remove('hidden');
     });
 
+    ipcRenderer.on('update-not-available', () => {
+      ipcRenderer.removeAllListeners('update-not-available');
+      message.innerText = 'A new update is not available. Downloading now...';
+      notification.classList.remove('hidden');
+    });
+    ipcRenderer.on('error', () => {
+      ipcRenderer.removeAllListeners('error');
+      message.innerText = 'ERROR';
+      notification.classList.remove('hidden');
+    });
+
     ipcRenderer.on('update_downloaded', () => {
       ipcRenderer.removeAllListeners('update_downloaded');
       message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
