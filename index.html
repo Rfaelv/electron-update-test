@@ -61,9 +61,9 @@
       message.innerText = 'A new update is not available. Downloading now...';
       notification.classList.remove('hidden');
     });
-    ipcRenderer.on('error', () => {
+    ipcRenderer.on('error', (event, err) => {
       ipcRenderer.removeAllListeners('error');
-      message.innerText = 'ERROR';
+      message.innerText = err;
       notification.classList.remove('hidden');
     });
 

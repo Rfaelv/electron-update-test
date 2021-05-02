@@ -47,8 +47,8 @@ autoUpdater.on('update-available', () => {
 autoUpdater.on('update-not-available', () => {
     mainWindow.webContents.send('update-not-available');
 });
-autoUpdater.on('error', () => {
-  mainWindow.webContents.send('error');
+autoUpdater.on('error', (err) => {
+  mainWindow.webContents.send('error', err);
 });
 // autoUpdater.on('error', (err) => {
 //     sendStatusToWindow('Error in auto-updater. ' + err);
